@@ -1,0 +1,74 @@
+= DESCRIPTION
+
+Allows you to easily implement testing for a Rails engine.
+
+= USAGE
+
+Add test_engine as a development dependency to your gemspec
+
+    s.add_development_dependency 'test_engine'
+
+If you are using Test::Unit then add the following to your Rakefile. This will
+define standard test tasks (test:units, test:functionals, test:integration):
+
+    require 'test_engine/test_unit'
+
+Other test frameworks are not supported but this library is structured so that
+support can be easily added. I welcome patches.
+
+By default your tests are run against the latest version of Rails installed
+on your machine. But if you wish to run against an earlier version, use the
+environment variable RAILS_VERSION
+
+    RAILS_VERSION=3.1.3 bundle exec rake test
+
+If you need to include a library for your testing add it as a development
+dependency in your gemspec. For example if you need Capybara for your
+integration tests just add the following to your engine's gemspec.
+
+    s.add_development_dependency 'capybara'
+    s.add_development_dependency 'database_cleaner'
+
+Only Rails 3 and greater is supported. This library assumes the tmp directory
+in your project is ok to stick temp files and you should have this directory
+ignored by your SCM.
+
+== test:engine:clean
+
+To test your engine a dummy app is generated so your tests run in a real Rails
+environment. These dummy apps are re-used between test runs to keep things
+moving faster. If you need these dummy apps to be re-generated you can use
+this task to clean out the unwanted apps. This removes all dummy apps. If you
+just wish to remove a specific version you can use the RAILS_VERSION environment
+variable.
+
+== Bundler sudo prompt
+
+Since a real Rails app is being generated bundler is being run on that app to
+ensure you have all the necessary dependencies. This means you may get a sudo
+prompt so the gems can be installed system-wide (just like as if you ran bundler
+manually on the app). If you do just enter the password and it will happily
+continue on.
+
+= Testing This Library
+
+    bundler exec rake test
+
+Since the tests need to generate an old version of a Rails app you need
+a version of Rails >= 3.0 that is NOT the latest version installed.
+
+= Alternatives
+
+The two main alternatives to this libary are:
+
+* Including a dummy app in the engine:
+  We are actually doing this but instead of having you setup this manually
+  and check it into your repo, this library is generating it at test time.
+* Faking a stripped down version of rails:
+  This tries to avoid generating a full Rails app. A good example of this is
+  https://github.com/freelancing-god/combustion. While interesting, it seems
+  very fragile (i.e. new versions of Rails could break easy) and since it isn't
+  a normal Rails setup you might not have the same test results as you would
+  have running it in a real app. I think this is where we should move to as
+  generating an app is a crutch. But I think it should be something natively
+  supported by Rails not hacked on.

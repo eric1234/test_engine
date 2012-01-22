@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+# Functionality the same as the Rubygem wrapper for the rails command
+# line program but correctly deals with the fact that older versions of Rails
+# put the bin in the "rails" gem while newer Rails puts the bin in the
+# "railties" gem.
+
+require 'rubygems'
+
+version = ">= 0"
+if ARGV.first =~ /^_(.*)_$/ and Gem::Version.correct? $1 then
+  version = $1
+  ARGV.shift
+end
+
+begin
+  # Try the new railties location first
+  gem 'railties', version
+  load Gem.bin_path('railties', 'rails', version)
+rescue Gem::LoadError, Gem::GemNotFoundException
+  # Revert back to the old rails location
+  gem 'rails', version
+  load Gem.bin_path('rails', 'rails', version)
+end

@@ -1,0 +1,19 @@
+The goal is to keep this gem as simple as possible. We don't want some big
+complicated library. Just something that will provide a bit of help in running
+tests on Rails engines. So unless we have a REAL WORLD need for a feature it
+will not be added. This file is the place to store those things we think will
+be cool but don't yet have a REAL WORLD need.
+
+* Support different test frameworks (rspec, etc.)
+* Allow a gem to tweak the generated app. Likely by allow it to add it's own
+  template/generator/thor commands.
+* Allow the tests to be run against a real app not just dummy apps. That way
+  you can verify everything works in your app. Not just an empty app.
+* We could likely support recent versions of Rails 2.x by generating a 2.x
+  app, then adding Bundler support to that app.
+* Allow tests to be run against a custom database rather than assuming SQLite
+* Rails has a whole suite of Test::Unit tasks that we are not mimicing such as
+  test:uncommited and test:recent. We may want to add these if people start
+  creating large engines.
+* Might be useful to have a rake task or generator for creating a
+  test_helper.rb file
