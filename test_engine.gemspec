@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake'
   s.files = Dir['lib/**/*.rb']
   s.has_rdoc = true
-  s.extra_rdoc_files << 'README'
-  s.rdoc_options << '--main' << 'README'
+  s.extra_rdoc_files << 'README.rdoc'
+  s.rdoc_options << '--main' << 'README.rdoc'
   s.summary = 'Easy testing of Rails engines'
   s.description = <<-DESCRIPTION
     Allows you to easily implement testing for a Rails engine and have it
