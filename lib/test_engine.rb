@@ -21,35 +21,31 @@ class TestEngine < Rake::TaskLib
   # Define the "generate" task which will generate a dummy Rails app when ran.
   def install_generate
     task 'test:engine:generate' do
-      # Some info for the app template
-      env = {
-        'ENGINE_NAME' => engine_name,
-        'OLDPWD'      => Dir.pwd,
-        'DEV_DEPS'    => (development_dependencies - ['test_engine']).join(','),
-      }
+      unless app_path.exist?
 
-      clean_sh %Q!
-          #{rails_stub} _#{rails_version}_ new #{app_path}
-            --skip-bundle -f -m #{template_path}
-        !, env unless app_path.exist?
-    end
-  end
+        # Some info for the app template
+        env = {
+          'ENGINE_NAME' => engine_name,
+          'ENGINE_PATH' => Dir.pwd,
+          'DEV_DEPS'    => (development_dependencies - ['test_engine']).join(','),
+        }
 
-  # Define the "clean" task which will remove dummy Rails apps when ran.
-  def install_clean
-    desc 'Remove dummy test apps. RAILS_VERSION to remove specific version'
-    task 'test:engine:clean' do
-      rails_version = ENV['RAILS_VERSION'] || '*'
-      rm_rf Dir["tmp/dummy_apps/v#{rails_version}"], :verbose => false
+        clean_sh %Q!
+            #{rails_stub} _#{rails_version}_ new #{app_path}
+              --skip-bundle -f -m #{template_path}
+          !, env
+      end
     end
   end
 
   # Define the "setup" task that will load any engine migrations and seed data
   def install_setup
     task 'test:engine:setup' => 'test:engine:generate' do
-      clean_sh 'bundle install --quiet', {'BUNDLE_GEMFILE' => gemfile_path}, true
-      rake "railties:install:migrations"
-      rake "db:migrate", 'RAILS_ENV' => 'test'
+      unless app_path.exist?
+        clean_sh 'bundle install --quiet', {'BUNDLE_GEMFILE' => gemfile_path}, true
+        rake "railties:install:migrations"
+        rake "db:migrate", 'RAILS_ENV' => 'test'
+      end
     end
   end
 
@@ -59,6 +55,15 @@ class TestEngine < Rake::TaskLib
       ENV['BUNDLE_GEMFILE'] = gemfile_path.to_s
       ENV['RUBYOPT'] = "-r./#{app_path}/config/environment"
       ENV['RAILS_ENV'] = 'test'
+    end
+  end
+
+  # Define the "clean" task which will remove dummy Rails apps when ran.
+  def install_clean
+    desc 'Remove dummy test apps. RAILS_VERSION to remove specific version'
+    task 'test:engine:clean' do
+      rails_version = ENV['RAILS_VERSION'] || '*'
+      rm_rf Dir["tmp/dummy_apps/v#{rails_version}"], :verbose => false
     end
   end
 
