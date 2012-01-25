@@ -41,7 +41,7 @@ class TestEngine < Rake::TaskLib
   # Define the "setup" task that will load any engine migrations and seed data
   def install_setup
     task 'test:engine:setup' => 'test:engine:generate' do
-      unless app_path.exist?
+      unless app_path.join('db/schema.rb').exist?
         clean_sh 'bundle install --quiet', {'BUNDLE_GEMFILE' => gemfile_path}, true
         rake "railties:install:migrations"
         rake "db:migrate", 'RAILS_ENV' => 'test'
