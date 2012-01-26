@@ -50,6 +50,17 @@ prompt so the gems can be installed system-wide (just like as if you ran bundler
 manually on the app). If you do just enter the password and it will happily
 continue on.
 
+= Examples
+
+If you want to see some real engines that use this library check out the
+following:
+
+  * logmein[https://github.com/eric1234/logmein] - An engine for allowing users
+    to login and logout.
+  * remindme[https://github.com/eric1234/logmein] - An engine to allow a user
+    to request a password reset, be sent a token link in e-mail which takes the
+    user to a form so they can enter a new password.
+
 = Testing This Library
 
     bundler exec rake test
