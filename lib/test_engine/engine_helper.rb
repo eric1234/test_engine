@@ -8,7 +8,7 @@ module TestEngine::EngineHelper
 
   # A list of all development dependencies defined by the engine's gemspec
   def development_dependencies
-    Gem::Specification.load(gemspec_path.to_s).development_dependencies.collect &:name
+    Gem::Specification.load(gemspec_path.to_s).development_dependencies
   end
 
   private

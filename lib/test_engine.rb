@@ -23,11 +23,20 @@ class TestEngine < Rake::TaskLib
     task 'test:engine:generate' do
       unless app_path.exist?
 
+        # Serialize all dependencies into a string that looks like:
+        #
+        #   <gem 1>|<version requirements 1>,<gem 2>|<version requirements 2>,....
+        #
+        # Also remove the 'test_engine' development dependency
+        deps = development_dependencies.
+          reject {|d| d.name == 'test_engine'}.
+          collect {|d| [d.name, d.requirement.to_s] * '|'}.join(',')
+
         # Some info for the app template
         env = {
           'ENGINE_NAME' => engine_name,
           'ENGINE_PATH' => Dir.pwd,
-          'DEV_DEPS'    => (development_dependencies - ['test_engine']).join(','),
+          'DEV_DEPS'    => deps,
         }
 
         clean_sh %Q!

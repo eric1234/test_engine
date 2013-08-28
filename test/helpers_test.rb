@@ -31,7 +31,7 @@ class HelpersTest < TestCase
   end
 
   def test_development_dependencies
-    assert_equal ['rake'], development_dependencies
+    assert_equal ['rake'], development_dependencies.collect(&:name)
   end
 
 end
