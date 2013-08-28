@@ -1,4 +1,4 @@
-require File.join File.dirname(__FILE__), 'test_helper'
+require_relative 'test_helper'
 require 'test_engine/engine_helper'
 
 # Test the various helper methods defined in the library that are mostly used
@@ -10,7 +10,7 @@ require 'test_engine/engine_helper'
 #   * The path and Rails version methods cannot really be tested without making
 #     the tests just as complicated as what we are testing. We could hard-code
 #     the versions and paths but that will change machine to machine.
-class HelpersTest < Test::Unit::TestCase
+class HelpersTest < TestCase
   include TestEngine::EngineHelper
 
   def test_clean_sh

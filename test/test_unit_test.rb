@@ -1,7 +1,7 @@
-require File.join File.dirname(__FILE__), 'test_helper'
+require_relative 'test_helper'
 require 'test_engine/test_unit'
 
-class TestUnitTest < Test::Unit::TestCase
+class TestUnitTest < TestCase
 
   # Do we correctly install the Test::Unit tasks?
   def test_install_tasks

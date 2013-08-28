@@ -1,6 +1,6 @@
-require File.join File.dirname(__FILE__), 'test_helper'
+require_relative 'test_helper'
 
-class BaseTest < Test::Unit::TestCase
+class BaseTest < TestCase
 
   # Do we correctly install the base tasks?
   def test_install_tasks
@@ -19,7 +19,7 @@ class BaseTest < Test::Unit::TestCase
     assert_file_exists app_path.join('config/application.rb')
 
     # Make sure our engine is a dependency of the new app using :path
-    assert_file_contents_match app_path.join('Gemfile'), %Q{gem "test_engine", :path => "#{library_path.expand_path}"}
+    assert_file_contents_match app_path.join('Gemfile'), %Q{gem "test_engine", path: "#{library_path.expand_path}"}
 
     # Modify a file so we can verify the app is not regenerated
     modified_file = app_path.join('README').to_s

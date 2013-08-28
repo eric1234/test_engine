@@ -1,8 +1,8 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'fileutils'
 require 'test_engine'
 
-class Test::Unit::TestCase
+class TestCase < Minitest::Unit::TestCase
   include TestEngine::RakeHelper
   include TestEngine::SystemHelper
 
