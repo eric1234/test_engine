@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 # Functionality the same as the Rubygem wrapper for the rails command
-# line program but correctly deals with the fact that older versions of Rails
-# put the bin in the "rails" gem while newer Rails puts the bin in the
-# "railties" gem.
+# line program but correctly deals with the fact that older versions of
+# Rails put the bin in the "rails" gem while newer Rails puts the bin in
+# the "railties" gem.
 
 require 'rubygems'
 

@@ -30,10 +30,7 @@ class BaseTest < TestCase
     assert_file_contents_match modified_file, "Modified"
   end
 
-  # Can we specify a specific version. This assume you have Rails 3.1.1
-  # installed. Kind of annoying but keeps the test simpler over trying to
-  # automatically determine what older version of Rails 3.x you might have
-  # installed.
+  # Can we specify a specific version.
   def test_generate_specific_version
     TestEngine.install_tasks
     ENV['RAILS_VERSION'] = older_installed_rails
