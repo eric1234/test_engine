@@ -3,6 +3,7 @@ Gem::Specification.new do |s|
   s.version = '0.0.5'
   s.author = 'Eric Anderson'
   s.email = 'eric@pixelwareinc.com'
+  s.license = 'Public domain'
   s.add_dependency 'rails', '> 3'
   s.add_dependency 'bundler'
   s.add_development_dependency 'rake'
